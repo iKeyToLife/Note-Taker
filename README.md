@@ -59,6 +59,9 @@ To install the application, follow these steps:
 3. Install the dependencies:
    ```bash
    npm install
+4. Start server:
+   ```bash
+   npm start
 
 ## Features
 
