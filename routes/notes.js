@@ -2,10 +2,12 @@ const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
 
+// return data from db.json
 notes.get(`/`, (req, res) => {
     readFromFile(`./db/db.json`).then((data) => res.json(JSON.parse(data)));
 })
 
+// post new note to db.json
 notes.post('/', (req, res) => {
 
     const { title, text } = req.body;
@@ -24,6 +26,7 @@ notes.post('/', (req, res) => {
     }
 });
 
+// delete by id note from db.json
 notes.delete(`/:id`, (req, res) => {
 
     const filePath = `./db/db.json`;
@@ -31,10 +34,15 @@ notes.delete(`/:id`, (req, res) => {
 
     readFromFile(filePath).then((data) => {
 
+        // data db.json
         const notesDb = JSON.parse(data);
+
+        // try find index from notesDb
         const index = notesDb.findIndex(note => note.id === id);
 
+        // if find index
         if (index !== -1) {
+            // delete from array objects by index
             notesDb.splice(index, 1);
             console.info(`note with id: ${id} deleted`);
             return writeToFile(filePath, notesDb);

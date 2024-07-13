@@ -12,6 +12,7 @@ app.use('/api', api);
 
 app.use(express.static(`public`));
 
+// html send
 require('./routes/htmlRoutes')(app);
 
 app.listen(PORT, () =>
